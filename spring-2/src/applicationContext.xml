@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+	<!-- 配置bean 通过反射spring帮助我们创建一个对象，用bean的id标示，在用property的name找到set对象，将value的值付给变量 -->
+	<!-- 
+		配置bean	
+		class:bean
+	 -->
+	<bean id="helloWorld" class="com.atguigu.spring.beans.HelloWorld">
+		<property name="name" value="学习spring"></property>
+	</bean>
+	<!-- 通过构造方法来配置bean的属性 -->
+	<bean id="car" class="com.atguigu.spring.beans.Car">
+		<constructor-arg value="Audi" index="0"></constructor-arg>
+		<constructor-arg value="shanghai" index="1"></constructor-arg>
+		<constructor-arg value="300000" type="double"></constructor-arg>
+	</bean>
+	
+	<bean id="car2" class="com.atguigu.spring.beans.Car">
+		<constructor-arg value="Baoma" type="java.lang.String"></constructor-arg>
+		<constructor-arg type="java.lang.String">
+			<value><![CDATA[<shuanghai^^^^&&>]]></value>
+		</constructor-arg>
+		<constructor-arg type="int">
+			<value>280</value>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="person" class="com.atguigu.spring.beans.Person">
+		<property name="name" value="Jack"></property>
+		<property name="age" value="27"></property>
+		<property name="car">
+			<bean class="com.atguigu.spring.beans.Car">
+				<constructor-arg value="fond"></constructor-arg>
+				<constructor-arg value="shanghai"></constructor-arg>
+				<constructor-arg value="200000" type="double"></constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="person2" class="com.atguigu.spring.beans.Person">
+		<constructor-arg value="Tom"></constructor-arg>
+		<constructor-arg value="25"></constructor-arg>
+		<constructor-arg ><null/></constructor-arg>
+	</bean>
+	
+	<bean id="person3" class="com.atguigu.spring.beans.Person">
+		<constructor-arg value="caoqi"></constructor-arg>
+		<constructor-arg value="24"></constructor-arg>
+		<constructor-arg ref="car"></constructor-arg>
+		<property name="car.maxspeed" value="290"></property>
+	</bean>
+	<bean id="person4" class="com.atguigu.spring.beans.collections.Person">
+		<property name="name" value="Mike"></property>
+		<property name="age" value="27"></property>
+		<property name="cars">
+			<list>
+				<ref bean="car"/>
+				<ref bean="car2"/>
+				<bean class="com.atguigu.spring.beans.Car">
+					<constructor-arg value="fond"></constructor-arg>
+					<constructor-arg value="shanghai"></constructor-arg>
+					<constructor-arg value="200000" type="double"></constructor-arg>
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="newPerson" class="com.atguigu.spring.beans.collections.NewPerson">
+		<property name="name" value="Rose"></property>
+		<property name="age" value="27"></property>
+		<property name="cars">
+			<map>
+				<entry key="AA" value-ref="car"></entry>
+				<entry key="BB" value-ref="car2"></entry>
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="dataSource" class="com.atguigu.spring.beans.collections.DataSource">
+		<property name="propertise">
+			<props>
+				<prop key="driverClass">com.oracle.jdbc.Driver</prop>
+				<prop key="jdbcUrl">jdbc:oracle://test</prop>
+				<prop key="user">Root</prop>
+				<prop key="password">123</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<util:list id="cars">
+		<ref bean="car"/>
+		<ref bean="car2"/>
+	</util:list>
+	
+	<bean id="person5" class="com.atguigu.spring.beans.collections.Person">
+		<property name="name" value="Kebi"></property>
+		<property name="age" value="28"></property>
+		<property name="cars" ref="cars"></property>
+	</bean>
+	
+	<bean id="person6" class="com.atguigu.spring.beans.collections.Person" p:name="Queen"
+	p:age="30" p:cars-ref="cars"></bean>
+</beans>
+
+
+
+
+
+
+
+
+
+
